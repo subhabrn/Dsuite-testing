@@ -1,21 +1,15 @@
-
 import uvicorn
-from pathlib import Path
-import sys
+import os
 
-# Add the parent directory to sys.path
-sys.path.append(str(Path(__file__).parent))
+def run_server():
+    """Run the FastAPI server using uvicorn"""
+    from backend.main import app
 
-from backend.main import app
+    # Get port from environment or default to 8000
+    port = int(os.environ.get("PORT", 8000))
+
+    # Run the application
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=port, reload=True)
 
 if __name__ == "__main__":
-    # The uvicorn server configuration
-    uvicorn.run(
-        "backend.main:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,  # Enable auto-reload in development
-        log_level="info",
-        proxy_headers=True,
-        forwarded_allow_ips="*",
-    )
+    run_server()
