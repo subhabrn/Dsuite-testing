@@ -1,4 +1,9 @@
 {
   "name": "project",
   "version": "1.0.0"
+,
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "@types/jest": "^29.5.0"
+  }
 }
