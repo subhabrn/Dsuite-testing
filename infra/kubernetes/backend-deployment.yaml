@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-allocation-backend
+  labels:
+    app: resource-allocation-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: resource-allocation-backend
+  template:
+    metadata:
+      labels:
+        app: resource-allocation-backend
+    spec:
+      containers:
+      - name: backend
+        image: ${REGISTRY}/resource-allocation-backend:${TAG}
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: resource-allocation-secrets
+              key: database_url
