@@ -1,4 +1,43 @@
 {
-  "name": "project",
-  "version": "1.0.0"
+  "name": "resource-allocation-ai",
+  "version": "1.0.0",
+  "description": "AI-driven resource allocation system",
+  "main": "index.js",
+  "scripts": {
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "frontend:preview": "cd frontend && npm run preview",
+    "backend:start": "cd backend && python main.py",
+    "backend:test": "cd backend && pytest",
+    "backend:lint": "cd backend && flake8",
+    "start": "docker-compose up",
+    "build": "docker-compose build",
+    "down": "docker-compose down",
+    "deploy:dev": "terraform -chdir=infra/terraform/environments/dev apply",
+    "deploy:stage": "terraform -chdir=infra/terraform/environments/staging apply",
+    "deploy:prod": "terraform -chdir=infra/terraform/environments/prod apply",
+    "k8s:apply": "kubectl apply -f infra/kubernetes/",
+    "k8s:delete": "kubectl delete -f infra/kubernetes/",
+    "prepare-commit-msg": "cd frontend && lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/resource-allocation-ai.git"
+  },
+  "keywords": [
+    "resource-allocation",
+    "ai",
+    "machine-learning",
+    "optimization"
+  ],
+  "author": "Your Organization",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
 }
