@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-allocation-frontend
+  labels:
+    app: resource-allocation-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: resource-allocation-frontend
+  template:
+    metadata:
+      labels:
+        app: resource-allocation-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ${REGISTRY}/resource-allocation-frontend:${TAG}
+        ports:
+        - containerPort: 80
+        env:
+        - name: API_URL
+          value: "/api"

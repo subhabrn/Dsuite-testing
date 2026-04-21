@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./infra/docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://backend:8000/api
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./infra/docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/resource_allocation
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=resource_allocation
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  frontend_test:
+    build:
+      context: .
+      dockerfile: ./infra/docker/Dockerfile.frontend
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=test
+      - CI=true
+    command: npm test
+
+  backend_test:
+    build:
+      context: .
+      dockerfile: ./infra/docker/Dockerfile.backend
+    volumes:
+      - ./backend:/app
+    environment:
+      - ENVIRONMENT=test
+      - DATABASE_URL=postgresql://postgres:postgres@db_test:5432/resource_allocation_test
+    command: pytest -v
+    depends_on:
+      - db_test
+
+  db_test:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=resource_allocation_test
+
+volumes:
+  postgres_data:
