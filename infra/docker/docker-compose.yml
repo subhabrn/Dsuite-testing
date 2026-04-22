@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../../backend:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/resource_allocation
+      - ENVIRONMENT=development
+    depends_on:
+      - db
+    networks:
+      - resource-allocation-network
+
+  frontend:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../frontend:/app
+    depends_on:
+      - backend
+    networks:
+      - resource-allocation-network
+
+  db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=resource_allocation
+    networks:
+      - resource-allocation-network
+
+networks:
+  resource-allocation-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
