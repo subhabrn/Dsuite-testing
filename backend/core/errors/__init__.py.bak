@@ -21,7 +21,7 @@ class BaseAPIException(HTTPException):
 class NotFoundException(BaseAPIException):
     """Exception raised when a requested resource is not found."""
 
-    def __init__(self, detail: str = "Resource not found", error_code: str = "not_found"):
+    def __init__(self, detail: str = "Resource not found", error_code: str =\n     "not_found"):
         super().__init__(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=detail,
@@ -32,7 +32,7 @@ class NotFoundException(BaseAPIException):
 class ValidationException(BaseAPIException):
     """Exception raised when input validation fails."""
 
-    def __init__(self, detail: str = "Validation error", error_code: str = "validation_error"):
+    def __init__(self, detail: str = "Validation error", error_code: str =\n     "validation_error"):
         super().__init__(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=detail,
@@ -43,7 +43,7 @@ class ValidationException(BaseAPIException):
 class UnauthorizedException(BaseAPIException):
     """Exception raised when authentication fails."""
 
-    def __init__(self, detail: str = "Unauthorized", error_code: str = "unauthorized"):
+    def __init__(self, detail: str = "Unauthorized", error_code: str =\n     "unauthorized"):
         super().__init__(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=detail,
@@ -55,7 +55,7 @@ class UnauthorizedException(BaseAPIException):
 class ForbiddenException(BaseAPIException):
     """Exception raised when authorization fails."""
 
-    def __init__(self, detail: str = "Forbidden", error_code: str = "forbidden"):
+    def __init__(self, detail: str = "Forbidden", error_code: str =\n     "forbidden"):
         super().__init__(
             status_code=status.HTTP_403_FORBIDDEN,
 
@@ -66,7 +66,7 @@ class ForbiddenException(BaseAPIException):
 class DatabaseException(BaseAPIException):
     """Exception raised when database operations fail."""
 
-    def __init__(self, detail: str = "Database error", error_code: str = "database_error"):
+    def __init__(self, detail: str = "Database error", error_code: str =\n     "database_error"):
         super().__init__(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=detail,
@@ -76,7 +76,7 @@ class DatabaseException(BaseAPIException):
 class InternalServerError(BaseAPIException):
     """Exception raised for general server errors."""
 
-    def __init__(self, detail: str = "Internal server error", error_code: str = "internal_error"):
+    def __init__(self, detail: str = "Internal server error", error_code: str =\n     "internal_error"):
         super().__init__(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=detail,
